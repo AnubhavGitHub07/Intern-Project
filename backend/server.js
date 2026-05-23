@@ -1,13 +1,26 @@
-const express = require("express"); //import express library
+const express = require("express");
+const dotenv = require("dotenv");
+const cors = require("cors");
 
-const app = express(); //initialize the express application
+const connectDB = require("./config/db");
 
-app.get("/" , ( req , res ) =>{ //create a route for the home page
+const app = express();
+
+dotenv.config();
+
+connectDB();
+
+app.use(cors());
+
+app.use(express.json());
+
+
+app.get("/", (req, res) => {
     res.send("Devcollab is running");
 });
 
-const PORT = 5001;
+const PORT = process.env.PORT || 5001;
 
-app.listen(PORT , () =>{ //start the server
+app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
